@@ -1,17 +1,27 @@
+'''
+This module includes a function that analyzes the content of a text by counting
+the number of uppercase letters, lowercase letters, punctation marks, spaces, and
+the total number of characters.
+'''
+
 import sys
 import string
 
 
 def text_analyzer(text=""):
     '''
-    This function counts the number of upper characters, lower characters, punctuation and spaces in a given text.
+    This function counts the number of upper characters, lower characters,
+    punctuation and spaces in a given text.
     '''
-    if text == None or not text:
+    if text is None or not text:
         print("What is the text to analyze?")
-        text = input()
+        try:
+            text = input()
+        except EOFError:
+            text = ""
         text_analyzer(text)
         return
-    if (type(text) != str):
+    if not isinstance(text, str):
         print("AssertionError: argument is not a string", file=sys.stderr)
         return
 
@@ -21,21 +31,21 @@ def text_analyzer(text=""):
     space_count = 0
     char_count = 0
 
-    for c in text:
-        if c.islower():
+    for char in text:
+        if char.islower():
             lower_count += 1
-        elif c.isupper():
+        elif char.isupper():
             upper_count += 1
-        elif c == ' ':
+        elif char == ' ':
             space_count += 1
-        elif c in string.punctuation:
+        elif char in string.punctuation:
             punct_count += 1
         char_count += 1
     print(f'The text contains {char_count} character(s):')
-    print('- {} upper letter(s)'.format(upper_count))
-    print('- {} lower letter(s)'.format(lower_count))
-    print('- {} punctuation mark(s)'.format(punct_count))
-    print('- {} space(s)'.format(space_count))
+    print(f'- {upper_count} upper letter(s)')
+    print(f'- {lower_count} lower letter(s)')
+    print(f'- {punct_count} punctuation mark(s)')
+    print(f'- {space_count} space(s)')
 
 
 if __name__ == "__main__":

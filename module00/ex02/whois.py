@@ -1,3 +1,7 @@
+'''
+This program checks if an input is odd, even, or if it is equal to zero.
+'''
+
 import sys
 
 arguments = list(sys.argv)
@@ -11,12 +15,12 @@ if len(arguments) != 1:
     sys.exit()
 
 try:
-    arg = int(arguments[0])
-    if arg == 0:
+    ARG = int(arguments[0])
+    if ARG == 0:
         print("I'm Zero.")
-    elif arg % 2:
+    elif ARG % 2:
         print("I'm Odd.")
     else:
         print("I'm Even.")
-except:
+except ValueError:
     print("AssertionError: argument is not an integer", file=sys.stderr)

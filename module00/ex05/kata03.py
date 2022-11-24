@@ -1,3 +1,15 @@
-kata = "The right format"
+'''
+Kata number 03
+'''
 
-print(f'{kata:->42.42}', end="")
+KATA = "The right format"
+
+print(f'{KATA:->42.42}', end="")
+
+
+print()
+print("-------------------------------------------------------------------")
+
+KATA = ""
+
+print(f'{KATA:->42.42}', end="")

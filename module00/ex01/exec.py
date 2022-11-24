@@ -1,3 +1,6 @@
+'''
+This programs reverses a string and reverses the characters' case
+'''
 import sys
 
 arguments = list(sys.argv)
@@ -6,12 +9,12 @@ arguments.pop(0)
 if not arguments:
     sys.exit("usage: python3 exec.py arg1 arg2 ... argn")
 
-str = ' '.join(arguments)
+INPUT_STRING = ' '.join(arguments)
 
-str = str[::-1]
+INPUT_STRING = INPUT_STRING[::-1]
 res = []
 
-for c in str:
+for c in INPUT_STRING:
     if c.isupper():
         res += c.lower()
     elif c.islower():

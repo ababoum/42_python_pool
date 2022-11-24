@@ -1,33 +1,39 @@
+'''
+This program computes the 5 elementary math operations between the 2 inputs provided.
+'''
+
 import sys
 
 args = sys.argv
 args.pop(0)
 
+USAGE = "usage: python3 operations.py <number1> <number2>"
+
 if not args:
-    sys.exit("usage: python3 operations.py <number1> <number2>")
+    sys.exit(USAGE)
 
 if len(args) > 2:
     print("AssertionError: too many arguments", file=sys.stderr)
-    sys.exit()
+    sys.exit(USAGE)
 elif len(args) < 2:
     print("AssertionError: not enough arguments", file=sys.stderr)
-    sys.exit()
+    sys.exit(USAGE)
 
 try:
-    n1 = int(args[0])
-    n2 = int(args[1])
-except:
+    NUMBER1 = int(args[0])
+    NUMBER2 = int(args[1])
+except ValueError:
     print("AssertionError: only integers", file=sys.stderr)
-    sys.exit()
+    sys.exit(USAGE)
 
-print("{:12}{}".format("Sum:", n1+n2))
-print("{:12}{}".format("Difference:", n1-n2))
-print("{:12}{}".format("Product:", n1*n2))
+print(f'{"Sum":12}{NUMBER1+NUMBER2}')
+print(f'{"Difference:":12}{NUMBER1-NUMBER2}')
+print(f'{"Product:":12}{NUMBER1*NUMBER2}')
 try:
-    print("{:12}{}".format("Quotient:", n1/n2))
-except:
-	print("{:12}{}".format("Quotient:", "ERROR (division by zero)"))
+    print(f'{"Quotient:":12}{NUMBER1/NUMBER2}')
+except ZeroDivisionError:
+    print(f'{"Quotient:":12}{"ERROR (division by zero)"}')
 try:
-    print("{:12}{}".format("Quotient:", n1%n2))
-except:
-	print("{:12}{}".format("Quotient:", "ERROR (modulo by zero)"))
+    print(f'{"Quotient:":12}{NUMBER1 % NUMBER2}')
+except ZeroDivisionError:
+    print(f'{"Quotient:":12}{"ERROR (modulo by zero)"}')
