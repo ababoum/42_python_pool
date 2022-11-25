@@ -16,8 +16,8 @@ class Account(object):
             self.value = 0
         if self.value < 0:
             raise AttributeError("Attribute value cannot be negative.")
-        if not isinstance(self.name, str)
-        raise AttributeError("Attribute name must be a str object.")
+        if not isinstance(self.name, str):
+            raise AttributeError("Attribute name must be a str object.")
 
     def transfer(self, amount):
         self.value += amount
