@@ -34,6 +34,6 @@ try:
 except ZeroDivisionError:
     print(f'{"Quotient:":12}{"ERROR (division by zero)"}')
 try:
-    print(f'{"Quotient:":12}{NUMBER1 % NUMBER2}')
+    print(f'{"Remainder:":12}{NUMBER1 % NUMBER2}')
 except ZeroDivisionError:
-    print(f'{"Quotient:":12}{"ERROR (modulo by zero)"}')
+    print(f'{"Remainder:":12}{"ERROR (modulo by zero)"}')
