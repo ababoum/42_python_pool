@@ -23,7 +23,8 @@ class Book:
 
         self.last_update = str(date.today()) + \
             " at " + str(datetime.now().strftime("%H:%M:%S"))
-        self.creation_date = str(date.today())
+        self.creation_date = str(date.today()) + \
+            " at " + str(datetime.now().strftime("%H:%M:%S"))
         self.recipes_list = {
             'starter': [],
             'lunch': [],
@@ -57,8 +58,9 @@ class Book:
             print('Recipe type should be "starter", "lunch", or "dessert"',
                   file=sys.stderr)
             return None
-
-        return [recipe.name for recipe in self.recipes_list[recipe_type]]
+        for recipe in self.recipes_list[recipe_type]:
+            print(recipe)
+        return [recipe for recipe in self.recipes_list[recipe_type]]
 
     def add_recipe(self, recipe):
         """Add a recipe to the book and update last_update"""
@@ -68,7 +70,7 @@ class Book:
             print('Parameter recipe should be an instance of Recipe')
             return
         if any([item for item in self.recipes_list[recipe.recipe_type]
-                    if item.name == recipe.name]):
+                if item.name == recipe.name]):
             print(
                 f"A recipe with the name {recipe.name} already exists in the book!")
             return

@@ -5,9 +5,10 @@ Test file for Recipe and Book classes
 from recipe import Recipe
 from book import Book
 
-cake = Recipe('cake', 4, 42, ['chocolate'], 'lunch')
+cake = Recipe('cake', 4, 42, ['chocolate'], "", 'lunch')
 print(cake)
-pizza = Recipe('pizza', 4, 42, ['tomato', 'cheese'], 'dessert')
+pizza = Recipe('pizza', 4, 42, ['tomato', 'cheese'],
+               "Italian recipe",  'dessert')
 print(pizza)
 
 book = Book('Choumicha')
@@ -23,8 +24,8 @@ book.get_recipe_by_name("hello")
 book.get_recipe_by_name("cake")
 
 print(book.get_recipes_by_types('starter'))
-print(book.get_recipes_by_types('lunch'))
-print(book.get_recipes_by_types('dessert'))
+print(book.get_recipes_by_types('lunch')[0])
+print(book.get_recipes_by_types('dessert')[0])
 book.get_recipes_by_types('breakfast')
 
 print(book)
@@ -62,13 +63,13 @@ b.add_recipe(crumble)
 print(b.last_update)
 
 print("-----------------")
-b.get_recipe_by_name("Crumble")
+print(repr(b.get_recipe_by_name("Crumble")))
 # should print the recipe
 # AND
 # <Recipe object at x>
 
 print("-----------------")
-b.get_recipe_by_name("Liver Icecream")
+print(b.get_recipe_by_name("Liver Icecream"))
 # The recipe does not exist
 # The error must be handled in a justifiable manner
 # such as returning None, [], or printing an error message
@@ -76,6 +77,6 @@ b.get_recipe_by_name("Liver Icecream")
 print("-----------------")
 print(b.get_recipes_by_types("dessert")[0])
 # Should print the Crumble recipe
-b.get_recipes_by_types("asdasd")
+print(b.get_recipes_by_types("asdasd"))
 # The recipe type does not exist, error must be handled in a justifiable manner
 # such as returning None, [], or printing an error message
