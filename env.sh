@@ -62,7 +62,7 @@ function set_conda {
     $CONDA config --set auto_activate_base false
     printf "\e[33mCreating 42AI-$USER environnment:\e[0m\n"
     $CONDA update -n base -c defaults conda -y
-    $CONDA create --name 42AI-$USER python=3.7 jupyter numpy pandas pycodestyle -y
+    $CONDA create --name 42AI-$USER python=3.7 jupyter numpy pandas pycodestyle pylint -y
     printf "\e[33mLaunch the following command or restart your shell:\e[0m\n"
     if [ $MY_SHELL == "zsh" ]; then
         printf "\tsource ~/.zshrc\n"

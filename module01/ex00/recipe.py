@@ -12,40 +12,62 @@ class Recipe:
 
     def __init__(
             self, name: str, cooking_lvl: int, cooking_time: int,
-            ingredients: list, recipe_type: str, description: str = ""):
+            ingredients: list, description: str, recipe_type: str):
         # Check and set name
         if isinstance(name, str) and name:
             self.name = name
         else:
-            sys.exit("Recipe name should be a non-empty string")
+            print("Recipe name should be a non-empty string", file=sys.stderr)
+            self = None
+            return
         # Check and set cooking level
         if isinstance(cooking_lvl, int) and cooking_lvl in range(1, 6):
             self.cooking_lvl = cooking_lvl
         else:
-            sys.exit("Cooking level should be an integer between 1 and 5")
+            print("Cooking level should be an integer between 1 and 5",
+                  file=sys.stderr)
+            self = None
+            return
         # Check and set cooking time
         if isinstance(cooking_time, int) and cooking_time > 0:
             self.cooking_time = cooking_time
         else:
-            sys.exit("Cooking time should be a positive integer")
+            print("Cooking time should be a positive integer", file=sys.stderr)
+            self = None
+            return
         # Check and set ingredients list
         if isinstance(ingredients, list) and \
                 ingredients and all(isinstance(item, str) for item in ingredients):
             self.ingredients = ingredients
         else:
-            sys.exit(
-                "Ingredients should be a non-empty list containing only strings")
+            print(
+                "Ingredients should be a non-empty list containing only strings",
+                file=sys.stderr)
+            self = None
+            return
+        # Check and set description
+        if isinstance(description, str):
+            self.description = description
+        else:
+            print('Description should be a string', file=sys.stderr)
+            self = None
+            return
         # Check and set recipe type
         if isinstance(recipe_type, str) and \
                 recipe_type in ['starter', 'lunch', 'dessert']:
             self.recipe_type = recipe_type
         else:
-            sys.exit('Recipe type should be "starter", "lunch", or "dessert"')
+            print('Recipe type should be "starter", "lunch", or "dessert"',
+                  file=sys.stderr)
+            self = None
+            return
         # Check and set description
         if isinstance(description, str):
             self.description = description
         else:
-            sys.exit("Description should be a string")
+            print("Description should be a string", file=sys.stderr)
+            self = None
+            return
 
     def __str__(self):
         return f'Recipe name: {self.name}\n\

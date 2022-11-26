@@ -66,11 +66,12 @@ class Book:
         sleep(1)
         if not isinstance(recipe, Recipe):
             print('Parameter recipe should be an instance of Recipe')
-            return None
-        if any([item for item in self.recipes_list[recipe.recipe_type] if item.name == recipe.name]):
+            return
+        if any([item for item in self.recipes_list[recipe.recipe_type]
+                    if item.name == recipe.name]):
             print(
                 f"A recipe with the name {recipe.name} already exists in the book!")
-            return None
+            return
         self.recipes_list[recipe.recipe_type].append(recipe)
         self.last_update = str(date.today()) + \
             " at " + str(datetime.now().strftime("%H:%M:%S"))
