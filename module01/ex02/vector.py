@@ -24,39 +24,45 @@ class InvalidOperation(Error):
 class Vector:
     '''Vector object (either row or column vector)'''
 
-    def __init__(self, coordinates=None, size=None, _range=None):
-        if not any([coordinates, size, _range]):
-            print("Vector should be initialized with some kind of parameter")
-            raise VectorBuildError
-        if len([x for x in [coordinates, size, _range] if x]) != 1:
-            print("Vector should be initialized with only one kind of parameter")
-            raise VectorBuildError
-        if isinstance(coordinates, list) and coordinates:
-            self.values = coordinates
-            if len(coordinates) == 1:
-                if any([not isinstance(item, float) for item in coordinates[0]]):
+    def __init__(self, values):
+        # Constructor with positive integer value
+        if isinstance(values, int):
+            if values <= 0:
+                print("Size initializer value must be a strictly positive integer")
+                raise VectorBuildError
+            else:
+                self.values = [[float(i)] for i in range(values)]
+                self.shape = (len(self.values), 1)
+        # Constructor with range
+        elif isinstance(values, tuple):
+            if len(values) != 2 or not isinstance(values[0], int) or not isinstance(values[1], int):
+                print(
+                    "Wrong initializer range format. Usage: Vector((<int>, <int>))")
+                raise VectorBuildError
+            else:
+                if values[0] >= values[1]:
+                    print(
+                        "Vector range initializer is invalid (start should be strictly before end)")
+                    raise VectorBuildError
+                self.values = [[float(i)] for i in range(values[0], values[1])]
+                self.shape = (len(self.values), 1)
+        # Constructor with list
+        elif isinstance(values, list) and values:
+            self.values = values
+            if len(values) == 1:
+                if any([not isinstance(item, float) for item in values[0]]):
                     print("Row vector can only contain floats")
                     raise VectorBuildError
-                self.shape = (1, len(coordinates[0]))
+                self.shape = (1, len(values[0]))
             else:
                 if any([not isinstance(item, list) or
                         len(item) != 1 or not isinstance(item[0], float)
-                        for item in coordinates]):
+                        for item in values]):
                     print("Column vector can only contain lists")
                     raise VectorBuildError
-                self.shape = (len(coordinates), 1)
-        elif isinstance(size, int) and size > 0:
-            self.values = [[float(i) for i in range(size)]]
-            self.shape = (len(self.values), 1)
-        elif isinstance(_range, tuple) and len(_range) == 2 and \
-                isinstance(_range[0], int) and isinstance(_range[1], int):
-            if _range[0] >= _range[1]:
-                print(
-                    "Vector range paramater is invalid (start should be strictly before end)")
-                raise VectorBuildError
-            self.values = [[float(i) for i in range(_range[0], _range[1])]]
-            self.shape = (len(self.values), 1)
+                self.shape = (len(values), 1)
         else:
+            print("Non-recognized constructor format")
             raise VectorBuildError
 
     def dot(self, other):
@@ -100,8 +106,9 @@ class Vector:
 
     def __mul__(self, other):
         if not isinstance(other, (float, int)):
+            print(
+                f"Vector multiplication by {type(other).__name__} is forbidden")
             raise NotImplementedError
-
         if self.shape == (len(self.values), 1):  # Column vector
             return Vector([[item[0] * other] for item in self.values])
         else:
@@ -112,8 +119,10 @@ class Vector:
 
     def __truediv__(self, other):
         if not isinstance(other, (float, int)):
-            raise NotImplementedError
-
+            raise NotImplementedError(
+                "Vector can only be devided by a float or an integer")
+        if (other == 0):
+            raise InvalidOperation('Division by zero is forbidden')
         if self.shape == (len(self.values), 1):  # Column vector
             return Vector([[item[0] / other] for item in self.values])
         else:
@@ -121,10 +130,10 @@ class Vector:
 
     def __rtruediv__(self, other):
         raise NotImplementedError(
-            "Division of a scalar by a Vector is not defined.")
+            "Division of a scalar by a Vector is not defined")
 
     def __str__(self) -> str:
-        return f'{self.values}'
+        return f'Vector ({self.values})'
 
     def __repr__(self) -> str:
-        return f'{self.values}'
+        return f'Vector ({self.values})'

@@ -95,9 +95,9 @@ print(v1)
 # Expected output: to see what __str__() should do
 # [[0.0, 1.0, 2.0, 3.0]]
 print("\033[93mExample 4:\033[0m")
-print(Vector(size=3))
-print(Vector(_range=(10, 16)))
+print(Vector(3))
+print(Vector((10, 16)))
 try:
-    print(Vector(_range=(18, 16)))
+    print(Vector((18, 16)))
 except Exception as e:
     print(repr(e))

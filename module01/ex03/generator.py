@@ -29,7 +29,7 @@ def generator(text, sep=" ", option=None):
         shattered_text.sort()
         for word in shattered_text:
             yield word
-    else:
+    elif option == 'unique':
         shattered_text = list(dict.fromkeys(shattered_text))
         for word in shattered_text:
             yield word

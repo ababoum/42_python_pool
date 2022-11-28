@@ -31,3 +31,5 @@ print("*********************************************")
 
 robert = Stark("Robert")
 print(robert.__dict__)
+robert.die()
+print(robert.__dict__)
