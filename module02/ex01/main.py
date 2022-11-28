@@ -4,11 +4,11 @@ def what_are_the_vars(*args, **kwargs):
     """
     ret = ObjectC()
     for key, value in kwargs.items():
-        ret.__setattr__(key, value)
+        setattr(ret, key, value)
     for count, item in enumerate(args):
         if hasattr(ret, f"var_{count}"):
             return None
-        ret.__setattr__(f"var_{count}", item)
+        setattr(ret, f"var_{count}", item)
     return ret
 
 

@@ -61,13 +61,6 @@ class Recipe:
                   file=sys.stderr)
             self = None
             return
-        # Check and set description
-        if isinstance(description, str):
-            self.description = description
-        else:
-            print("Description should be a string", file=sys.stderr)
-            self = None
-            return
 
     def __str__(self):
         return f'Recipe name: {self.name}\n\
