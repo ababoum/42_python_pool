@@ -14,7 +14,7 @@ class ImageProcessor:
         arr = np.array(im_dims)
         print(
             f"Loading image of dimensions {im_dims.size[0]} x {im_dims.size[1]}")
-        return np.divide(arr[:,:,0:3], 255)
+        return np.divide(arr[:, :, 0:3], 255)
 
     def display(self, array):
         plt.imshow(array)

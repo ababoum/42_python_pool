@@ -162,7 +162,7 @@ class ColorFilter:
             if not kwargs['weights']:
                 return None
             if not isinstance(kwargs['weights'], list) or len(kwargs['weights']) != 3 \
-                or any(not isinstance(x, (float, int)) for x in kwargs['weights']):
+                    or any(not isinstance(x, (float, int)) for x in kwargs['weights']):
                 return None
             weight = np.array(kwargs['weights'])
             new_array = np.array(array)
@@ -194,3 +194,5 @@ if __name__ == "__main__":
     imp.display(cf.to_celluloid(arr))
     imp.display(cf.to_grayscale(arr, 'm'))
     imp.display(cf.to_grayscale(arr, 'weight', weights=[0.1, 0.3, 0.6]))
+    imp.display(cf.to_grayscale(arr, 'weight', weights=[0., 0., 1.]))
+    imp.display(cf.to_grayscale(arr, 'weight', weights=[1., 0., 0.]))

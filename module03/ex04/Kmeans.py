@@ -20,9 +20,16 @@ class KmeansClustering:
         self.ncentroid = ncentroid  # number of centroids
         self.max_iter = max_iter  # number of max iterations to update the centroids
         self.centroids = []  # values of the centroids
+        self.clusters = dict() # the centroids with their corresponding clusters (lists)
 
     def _distance(self, vec1: np.ndarray, vec2: np.ndarray):
         return (((vec1 - vec2) ** 2).sum()) ** 0.5
+
+    def _mean_value(self, cluster: list):
+        mean = np.array([0, 0, 0])
+        for point in cluster:
+            mean = mean + point
+        return mean / len(cluster)
 
     def fit(self, X):
         """
@@ -52,26 +59,27 @@ class KmeansClustering:
             self.centroids.append(X[pick])
             already_picked.append(pick)
 
-        self.clusters = dict()
-        for index, centroid in enumerate(self.centroids):
-            self.clusters[index] = []
-
         # run the kmeans algorithm
 
         for _ in range(0, self.max_iter):
+            # empty the clusters 
+            for index, _ in enumerate(self.centroids):
+                self.clusters[index] = []
             # distribute the entities in the clusters
             for entity in X:
                 distances = np.array(list((index, self._distance(
                     centroid, entity)) for index, centroid in enumerate(self.centroids)))
                 distances = distances[distances[:, 1].argsort()]
                 self.clusters[distances[0][0]].append(entity)
-            break
 
-            # compute the new
+            # compute the mean of each cluster
+            for index, _ in enumerate(self.centroids):
+                self.centroids[index] = self._mean_value(self.clusters[index])
 
+        # display final values
         for cluster in self.clusters.items():
             print(
-                f'Centroid number {cluster[0]}: {X[cluster[0]]}. Associated region: ?')
+                f'Centroid coordinates: {self.centroids[cluster[0]]}. Associated region: {cluster[0]}')
             print(f'Population size: {len(cluster[1])}\n')
 
     def predict(self, X):
@@ -87,7 +95,17 @@ class KmeansClustering:
         -------
         This function should not raise any Exception.
         """
-        pass
+        if not self.clusters:
+            print("You need to fit the dataset before running predictions!")
+            return None
+        res = []
+        for item in X:
+            for cluster in self.clusters.items():
+                ids = np.array(cluster[1])
+                if np.any(item == ids):
+                    res.append([cluster[0]])
+                    break
+        return np.array(res)
 
 
 if __name__ == "__main__":
@@ -128,7 +146,7 @@ if __name__ == "__main__":
     # read the dataset
 
     try:
-        dataset = pd.read_csv('solar_system_census.csv', sep=',')
+        dataset = pd.read_csv(filepath, sep=',')
     except:
         err_case("Error while opening dataset file (filepath)")
     dataset = np.array(dataset.values)
@@ -136,5 +154,8 @@ if __name__ == "__main__":
 
     # fit the dataset
 
-    kc = KmeansClustering(max_iter=20, ncentroid=4)
+    kc = KmeansClustering(max_iter=max_iter, ncentroid=ncentroid)
     kc.fit(dataset)
+    print(kc.predict(dataset))
+
+    

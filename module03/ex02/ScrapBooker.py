@@ -71,6 +71,8 @@ class ScrapBooker:
                 or n <= 0 or n >= array.shape[axis]:
             return None
         
+		# subject / scale not clear on what axis is what...
+		# comment next line to swap axis selection behavior
         axis = (axis + 1) % 2
 
         new_array = np.array(0)
